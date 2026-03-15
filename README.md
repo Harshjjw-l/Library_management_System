@@ -8,3 +8,6 @@ library-management-system/
 │   ├── src/
 │   └── package.json
 └── README.md
+
+
+mvn spring-boot:run    =>to run in terminal

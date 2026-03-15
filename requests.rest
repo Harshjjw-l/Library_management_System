@@ -1,0 +1,40 @@
+### Library Management System API - GET Requests
+
+### Base URL
+@baseUrl = http://localhost:8080/api
+
+### Get All Students
+GET {{baseUrl}}/students
+
+### Get All Books
+GET {{baseUrl}}/books
+
+### Get All Departments
+GET {{baseUrl}}/departments
+
+### Get All Publishers
+GET {{baseUrl}}/publishers
+
+### Get All Courses
+GET {{baseUrl}}/courses
+
+### Get All Staff
+GET {{baseUrl}}/staff
+
+### Get All Locations
+GET {{baseUrl}}/locations
+
+### Get All Status
+GET {{baseUrl}}/status
+
+### Get Student by ID
+GET {{baseUrl}}/students/1
+
+### Get Book by ID
+GET {{baseUrl}}/books/1
+
+### Get Department by ID
+GET {{baseUrl}}/departments/1
+
+### Get Publisher by ID
+GET {{baseUrl}}/publishers/1
