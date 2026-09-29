@@ -34,6 +34,14 @@ public class Book {
     )
     private Set<Course> courses;
 
+    @ManyToMany
+    @JoinTable(
+        name = "book_has_topic",
+        joinColumns = @JoinColumn(name = "book_id"),
+        inverseJoinColumns = @JoinColumn(name = "topic_id")
+    )
+    private Set<Topic> topics;
+
     // --- Getters and Setters for all fields ---
 
     public Long getId() {
@@ -100,5 +108,13 @@ public class Book {
 
     public void setCourses(Set<Course> courses) {
         this.courses = courses;
+    }
+
+    public Set<Topic> getTopics() {
+        return topics;
+    }
+
+    public void setTopics(Set<Topic> topics) {
+        this.topics = topics;
     }
 }

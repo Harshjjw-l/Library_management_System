@@ -66,15 +66,15 @@
             <p class="text-sm text-gray-500">Your Smart Assistant</p>
         </div>
         <nav class="flex-1 p-4 space-y-2">
-            <a href="#" onclick="navigateTo('dashboard')" class="nav-item group bg-indigo-50 text-indigo-700">
+            <a href="#" onclick="navigateTo('dashboard')" class="nav-item group bg-indigo-50 text-indigo-700 flex items-center space-x-3 p-3 rounded-lg font-medium transition">
                 <svg class="sidebar-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
                 <span>Dashboard</span>
             </a>
-            <a href="#" onclick="navigateTo('analyzer')" class="nav-item group">
+            <a href="#" onclick="navigateTo('analyzer')" class="nav-item group flex items-center space-x-3 p-3 rounded-lg font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition">
                 <svg class="sidebar-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
                 <span>Syllabus Analyzer</span>
             </a>
-            <a href="#" onclick="navigateTo('admin')" class="nav-item group">
+            <a href="#" onclick="navigateTo('admin')" class="nav-item group flex items-center space-x-3 p-3 rounded-lg font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition">
                 <svg class="sidebar-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                 <span>Admin Panel</span>
             </a>
@@ -120,63 +120,147 @@
                 </div>
             </div>
             
-            <!-- Book List -->
-            <div>
-                <h3 class="text-2xl font-bold text-gray-800 mb-4">Available Books</h3>
-                <div id="book-list" class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                    <!-- Book cards will be injected here by JavaScript -->
-                </div>
+            <!-- Book List Header & Status -->
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-2xl font-bold text-gray-800">Available Books</h3>
+                <span id="catalog-status" class="text-xs font-semibold px-2.5 py-1 rounded bg-indigo-100 text-indigo-700">Connecting to API...</span>
+            </div>
+
+            <!-- Book List Container -->
+            <div id="book-list" class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <!-- Book cards injected by JS -->
             </div>
         </div>
 
         <div id="analyzer-view" class="p-8 page-view hidden">
             <h2 class="text-3xl font-bold text-gray-800 mb-2">AI Syllabus Analyzer</h2>
-            <p class="text-gray-600 mb-6">Upload your department syllabus to get personalized book recommendations.</p>
+            <p class="text-gray-600 mb-6">Select a course to evaluate syllabus coverage and receive TF-IDF AI book recommendations via the Java backend.</p>
 
-            <div class="bg-white p-8 rounded-lg shadow-sm border border-gray-200">
-                 <div class="flex items-center justify-center w-full mb-6">
-                    <label for="syllabus-upload" class="flex flex-col items-center justify-center w-full h-64 border-2 border-indigo-300 border-dashed rounded-lg cursor-pointer bg-indigo-50 hover:bg-indigo-100 transition">
+            <div class="bg-white p-8 rounded-lg shadow-sm border border-gray-200 mb-8">
+                <div class="mb-6">
+                    <label for="course-select" class="block text-sm font-semibold text-gray-700 mb-2">Select Course from Database</label>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <select id="course-select" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-800 bg-white">
+                            <option value="">-- Loading Courses... --</option>
+                        </select>
+                        <input id="custom-course-id" type="text" placeholder="Or enter Course ID manually (e.g. CS101)" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-800">
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-center w-full mb-6">
+                    <label for="syllabus-upload" class="flex flex-col items-center justify-center w-full h-44 border-2 border-indigo-300 border-dashed rounded-lg cursor-pointer bg-indigo-50 hover:bg-indigo-100 transition">
                         <div class="flex flex-col items-center justify-center pt-5 pb-6">
                             <svg class="w-10 h-10 mb-3 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
-                            <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Click to upload</span> or drag and drop</p>
+                            <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Optional: Click to upload syllabus file</span></p>
                             <p class="text-xs text-gray-500">PDF, DOCX, or TXT (MAX. 5MB)</p>
                             <p id="file-name" class="text-sm text-indigo-600 font-medium mt-2"></p>
                         </div>
                         <input id="syllabus-upload" type="file" class="hidden" accept=".pdf,.docx,.txt" />
                     </label>
                 </div>
-                <button onclick="analyzeSyllabus()" class="w-full bg-indigo-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-indigo-700 transition duration-300 text-lg">
-                    Analyze & Recommend Books
+
+                <button onclick="analyzeSyllabus()" class="w-full bg-indigo-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-indigo-700 transition duration-300 text-lg flex items-center justify-center space-x-2">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    <span>Analyze & Recommend Books</span>
                 </button>
             </div>
-            
-            <div id="analysis-results" class="mt-8 hidden">
-                <h3 class="text-2xl font-bold text-gray-800 mb-4">Analysis Complete</h3>
-                <div class="grid lg:grid-cols-3 gap-6">
-                    <div class="lg:col-span-2 bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-                        <h4 class="font-semibold text-lg mb-4">Top Recommendations</h4>
-                        <div id="recommendation-list" class="space-y-4">
-                           <!-- Recommended book items will be injected here -->
-                        </div>
-                    </div>
-                    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200 flex flex-col items-center justify-center">
-                        <h4 class="font-semibold text-lg mb-4">Overall Syllabus Match</h4>
-                        <div class="w-full max-w-xs">
-                            <canvas id="similarity-chart"></canvas>
-                        </div>
-                        <p id="chart-summary" class="text-center text-gray-600 mt-4"></p>
+
+            <!-- Error Banner -->
+            <div id="ai-error-banner" class="mb-8 hidden bg-red-50 border-l-4 border-red-500 p-4 rounded-r-lg shadow-sm">
+                <div class="flex items-start">
+                    <svg class="w-6 h-6 text-red-500 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <div>
+                        <h4 class="font-bold text-red-800">AI Service Error</h4>
+                        <p id="ai-error-message" class="text-sm text-red-700 mt-1"></p>
                     </div>
                 </div>
             </div>
-             <div id="loading-spinner" class="mt-8 hidden text-center">
+
+            <!-- Loading Spinner -->
+            <div id="loading-spinner" class="mt-8 hidden text-center p-8 bg-white rounded-lg shadow-sm border border-gray-200">
                 <div role="status">
-                    <svg aria-hidden="true" class="inline w-10 h-10 text-gray-200 animate-spin dark:text-gray-600 fill-indigo-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg aria-hidden="true" class="inline w-12 h-12 text-gray-200 animate-spin fill-indigo-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
                         <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0492C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5424 39.6781 93.9676 39.0409Z" fill="currentFill"/>
                     </svg>
-                    <span class="sr-only">Loading...</span>
                 </div>
-                <p class="mt-4 text-lg text-gray-600">AI is analyzing your syllabus... This might take a moment.</p>
+                <p id="loading-text" class="mt-4 text-lg font-semibold text-gray-800">Analyzing Syllabus & Querying AI Service...</p>
+                <p class="text-sm text-gray-500 mt-1">Connecting through Java Backend (/api/ai/recommend, /coverage, /supplementary)...</p>
+            </div>
+            
+            <!-- Analysis Results View -->
+            <div id="analysis-results" class="mt-8 hidden space-y-8">
+                <h3 class="text-2xl font-bold text-gray-800">Analysis & Recommendation Results</h3>
+                
+                <!-- Grid layout for Top Recommendations and Doughnut Match Chart -->
+                <div class="grid lg:grid-cols-3 gap-6">
+                    <!-- Top Recommendations -->
+                    <div class="lg:col-span-2 bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex items-center justify-between mb-4">
+                            <h4 class="font-bold text-lg text-gray-800">Top Recommended Books (TF-IDF Similarity)</h4>
+                            <span id="score-note-badge" class="text-xs bg-indigo-50 text-indigo-600 px-2.5 py-1 rounded font-medium"></span>
+                        </div>
+                        <div id="recommendation-list" class="space-y-4">
+                           <!-- Recommended book items injected by JS -->
+                        </div>
+                    </div>
+
+                    <!-- Coverage Doughnut Chart -->
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200 flex flex-col items-center justify-between">
+                        <h4 class="font-bold text-lg text-gray-800 mb-2">Syllabus Topic Coverage</h4>
+                        <div class="w-full max-w-xs my-auto">
+                            <canvas id="similarity-chart"></canvas>
+                        </div>
+                        <div class="w-full text-center mt-4">
+                            <p id="chart-summary" class="text-lg font-bold text-indigo-600 mb-1"></p>
+                            <p id="coverage-explanation" class="text-xs text-gray-500 italic"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Coverage Topics Breakdown (Covered vs Missing) -->
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200 grid md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="font-bold text-md text-emerald-800 mb-3 flex items-center">
+                            <svg class="w-5 h-5 text-emerald-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            Covered Syllabus Topics
+                        </h4>
+                        <div id="covered-topics-list" class="flex flex-wrap gap-2">
+                            <!-- Covered topic tags -->
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-md text-amber-800 mb-3 flex items-center">
+                            <svg class="w-5 h-5 text-amber-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                            Missing Syllabus Topics
+                        </h4>
+                        <div id="missing-topics-list" class="flex flex-wrap gap-2">
+                            <!-- Missing topic tags -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Supplementary Recommendations Section -->
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                    <div class="flex flex-wrap items-center justify-between mb-4 gap-2">
+                        <div>
+                            <h4 class="font-bold text-lg text-gray-800">Supplementary Book Recommendations</h4>
+                            <p class="text-sm text-gray-500">Books selected specifically to cover missing syllabus topics</p>
+                        </div>
+                        <div id="supplementary-coverage-bump" class="bg-emerald-50 text-emerald-700 px-3 py-1.5 rounded-lg text-sm font-semibold border border-emerald-200">
+                            <!-- e.g. Coverage: 62.5% ➔ 87.5% -->
+                        </div>
+                    </div>
+
+                    <div id="supplementary-list" class="space-y-4">
+                        <!-- Supplementary book items injected by JS -->
+                    </div>
+
+                    <div id="remaining-uncovered-container" class="mt-6 pt-4 border-t border-gray-100 hidden">
+                        <p class="text-xs font-semibold text-gray-500 mb-2">Remaining Uncovered Topics After Supplementary Books:</p>
+                        <div id="remaining-uncovered-list" class="flex flex-wrap gap-2"></div>
+                    </div>
+                </div>
             </div>
         </div>
         
@@ -260,10 +344,13 @@
             </div>
         </div>
     </div>
-https://github.com/Harshjjw-l/Library_management_System
+
 <script>
-    // --- MOCK DATA ---
-    const books = [
+    // --- JAVA BACKEND CONFIGURATION ---
+    const API_BASE_URL = 'http://localhost:8080';
+
+    // Default local fallback catalog if backend API is offline
+    let books = [
         { id: 1, title: "Clean Code", author: "Robert C. Martin", topic: "Software Engineering", available: true, cover: "https://placehold.co/300x400/93c5fd/374151?text=Clean+Code" },
         { id: 2, title: "Designing Data-Intensive Applications", author: "Martin Kleppmann", topic: "System Design", available: true, cover: "https://placehold.co/300x400/6ee7b7/374151?text=System+Design" },
         { id: 3, title: "The Pragmatic Programmer", author: "Andrew Hunt", topic: "Software Engineering", available: false, cover: "https://placehold.co/300x400/fca5a5/374151?text=Pragmatic+Programmer" },
@@ -292,14 +379,89 @@ https://github.com/Harshjjw-l/Library_management_System
     const chatInput = document.getElementById('chat-input');
     const syllabusUpload = document.getElementById('syllabus-upload');
     const fileNameDisplay = document.getElementById('file-name');
+    const courseSelect = document.getElementById('course-select');
+    const catalogStatus = document.getElementById('catalog-status');
 
     // --- INITIALIZATION ---
-    document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', async () => {
         renderBooks(books);
         initChatbot();
         loginForm.addEventListener('submit', handleLogin);
         registerForm.addEventListener('submit', handleRegister);
+
+        // Fetch live catalog and courses from Java backend
+        await loadLiveCatalog();
+        await loadCourses();
     });
+
+    // --- FETCH LIVE BOOKS FROM JAVA BACKEND ---
+    async function loadLiveCatalog() {
+        try {
+            const response = await fetch(`${API_BASE_URL}/api/books`);
+            if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+            const data = await response.json();
+            
+            if (Array.isArray(data) && data.length > 0) {
+                books = data.map(b => {
+                    let topicsStr = 'General';
+                    if (b.topics && Array.isArray(b.topics) && b.topics.length > 0) {
+                        topicsStr = b.topics.map(t => typeof t === 'string' ? t : t.name).join(', ');
+                    }
+                    return {
+                        id: b.id,
+                        title: b.name || b.title || 'Untitled Book',
+                        author: b.authName || b.author || 'Unknown Author',
+                        topic: topicsStr,
+                        available: b.availability !== false,
+                        cover: `https://placehold.co/300x400/93c5fd/374151?text=${encodeURIComponent(b.name || 'Book')}`
+                    };
+                });
+                catalogStatus.textContent = `Live DB (${books.length} Books)`;
+                catalogStatus.className = 'text-xs font-semibold px-2.5 py-1 rounded bg-green-100 text-green-800';
+            } else {
+                catalogStatus.textContent = 'Using Sample Data (DB Empty)';
+                catalogStatus.className = 'text-xs font-semibold px-2.5 py-1 rounded bg-amber-100 text-amber-800';
+            }
+        } catch (err) {
+            console.warn('Backend API /api/books unavailable, falling back to local dataset.', err);
+            catalogStatus.textContent = 'Local Mode (Backend Offline)';
+            catalogStatus.className = 'text-xs font-semibold px-2.5 py-1 rounded bg-gray-100 text-gray-700';
+        }
+        renderBooks(books);
+    }
+
+    // --- FETCH COURSES FROM JAVA BACKEND ---
+    async function loadCourses() {
+        try {
+            const response = await fetch(`${API_BASE_URL}/api/courses`);
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            const courses = await response.json();
+            
+            courseSelect.innerHTML = '<option value="">-- Select Course from DB --</option>';
+            if (Array.isArray(courses) && courses.length > 0) {
+                courses.forEach(c => {
+                    const option = document.createElement('option');
+                    option.value = c.courseId;
+                    option.textContent = `${c.courseId} - ${c.name}`;
+                    courseSelect.appendChild(option);
+                });
+            } else {
+                addDefaultCourseOptions();
+            }
+        } catch (err) {
+            console.warn('Could not load courses from backend:', err);
+            addDefaultCourseOptions();
+        }
+    }
+
+    function addDefaultCourseOptions() {
+        courseSelect.innerHTML = `
+            <option value="">-- Select Course --</option>
+            <option value="CS101">CS101 - Introduction to Computer Science</option>
+            <option value="CS102">CS102 - Data Structures & Algorithms</option>
+            <option value="CS201">CS201 - Software Engineering</option>
+        `;
+    }
 
     // --- NAVIGATION ---
     function navigateTo(view) {
@@ -311,15 +473,17 @@ https://github.com/Harshjjw-l/Library_management_System
             item.classList.add('text-gray-600', 'hover:bg-gray-100', 'hover:text-gray-900');
         });
         const activeItem = document.querySelector(`.nav-item[onclick="navigateTo('${view}')"]`);
-        activeItem.classList.add('bg-indigo-50', 'text-indigo-700');
-        activeItem.classList.remove('text-gray-600', 'hover:bg-gray-100', 'hover:text-gray-900');
+        if (activeItem) {
+            activeItem.classList.add('bg-indigo-50', 'text-indigo-700');
+            activeItem.classList.remove('text-gray-600', 'hover:bg-gray-100', 'hover:text-gray-900');
+        }
     }
 
     // --- BOOK RENDERING & SEARCH ---
     function renderBooks(bookData) {
         bookList.innerHTML = '';
         if (bookData.length === 0) {
-            bookList.innerHTML = `<p class="col-span-full text-center text-gray-500">No books found matching your criteria.</p>`;
+            bookList.innerHTML = `<p class="col-span-full text-center text-gray-500 p-8">No books found matching your criteria.</p>`;
             return;
         }
         bookData.forEach(book => {
@@ -330,8 +494,9 @@ https://github.com/Harshjjw-l/Library_management_System
                     <img class="h-64 w-full object-cover" src="${book.cover}" alt="${book.title}">
                     <div class="p-4">
                         <h4 class="text-lg font-bold text-gray-800 truncate">${book.title}</h4>
-                        <p class="text-gray-600">${book.author}</p>
-                        <div class="mt-4">
+                        <p class="text-gray-600 text-sm">${book.author}</p>
+                        <p class="text-xs text-gray-400 mt-1 truncate">${book.topic}</p>
+                        <div class="mt-3">
                              <span class="text-xs font-semibold px-2 py-1 rounded-full ${availabilityClass}">${availabilityText}</span>
                         </div>
                     </div>
@@ -344,9 +509,9 @@ https://github.com/Harshjjw-l/Library_management_System
     searchInput.addEventListener('keyup', (e) => {
         const searchTerm = e.target.value.toLowerCase();
         const filteredBooks = books.filter(book => 
-            book.title.toLowerCase().includes(searchTerm) ||
-            book.author.toLowerCase().includes(searchTerm) ||
-            book.topic.toLowerCase().includes(searchTerm)
+            (book.title && book.title.toLowerCase().includes(searchTerm)) ||
+            (book.author && book.author.toLowerCase().includes(searchTerm)) ||
+            (book.topic && book.topic.toLowerCase().includes(searchTerm))
         );
         renderBooks(filteredBooks);
     });
@@ -362,7 +527,7 @@ https://github.com/Harshjjw-l/Library_management_System
                     <h3 class="text-2xl font-bold">${book.title}</h3>
                     <p class="text-gray-500">by ${book.author}</p>
                 </div>
-                <button onclick="closeBookDetails()" class="text-gray-400 hover:text-gray-600">&times;</button>
+                <button onclick="closeBookDetails()" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
             </div>
             <div class="p-6 overflow-y-auto flex-1">
                 <div class="grid md:grid-cols-3 gap-6">
@@ -370,35 +535,35 @@ https://github.com/Harshjjw-l/Library_management_System
                         <img class="rounded-lg shadow-md w-full" src="${book.cover}" alt="${book.title}">
                     </div>
                     <div class="md:col-span-2">
-                        <h4 class="font-semibold text-lg mb-2">Description</h4>
-                        <p class="text-gray-600 mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras venenatis euismod malesuada.</p>
+                        <h4 class="font-semibold text-lg mb-2">Topics & Categories</h4>
+                        <p class="text-gray-600 mb-4">${book.topic}</p>
                         <h4 class="font-semibold text-lg mb-2">Reviews & Comments</h4>
                         <div class="space-y-4">
                            <div class="flex items-start space-x-3">
                                <img class="w-8 h-8 rounded-full" src="https://placehold.co/100x100/A78BFA/FFFFFF?text=A" alt="Avatar">
                                <div>
                                    <p class="font-semibold text-sm">Alex Johnson</p>
-                                   <p class="text-gray-600 text-sm">A must-read for any aspiring software engineer. The principles are timeless.</p>
+                                   <p class="text-gray-600 text-sm">A must-read reference for students taking this course.</p>
                                </div>
                            </div>
                            <div class="flex items-start space-x-3">
                                <img class="w-8 h-8 rounded-full" src="https://placehold.co/100x100/F472B6/FFFFFF?text=S" alt="Avatar">
                                <div>
                                    <p class="font-semibold text-sm">Sarah Lee</p>
-                                   <p class="text-gray-600 text-sm">Changed the way I think about writing code. Highly recommended!</p>
+                                   <p class="text-gray-600 text-sm">Great topic coverage and clear explanations!</p>
                                </div>
                            </div>
                         </div>
                         <div class="mt-4">
-                             <textarea class="w-full p-2 border border-gray-300 rounded-lg" rows="3" placeholder="Add your comment..."></textarea>
-                             <button class="mt-2 bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-indigo-700 transition">Post Comment</button>
+                             <textarea class="w-full p-2 border border-gray-300 rounded-lg text-sm" rows="2" placeholder="Add your review comment..."></textarea>
+                             <button class="mt-2 bg-indigo-600 text-white font-semibold py-1.5 px-4 rounded-lg hover:bg-indigo-700 transition text-sm">Post Comment</button>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="p-4 bg-gray-50 border-t flex justify-end">
-                <button class="bg-gray-200 text-gray-800 font-semibold py-2 px-4 rounded-lg mr-2" onclick="closeBookDetails()">Close</button>
-                <button class="bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-indigo-700 transition" ${!book.available ? 'disabled' : ''} style="${!book.available ? 'opacity:0.5; cursor:not-allowed' : ''}">Issue Book</button>
+                <button class="bg-gray-200 text-gray-800 font-semibold py-2 px-4 rounded-lg mr-2 text-sm" onclick="closeBookDetails()">Close</button>
+                <button class="bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-indigo-700 transition text-sm" ${!book.available ? 'disabled style="opacity:0.5; cursor:not-allowed"' : ''}>Issue Book</button>
             </div>
         `;
         bookModal.classList.remove('hidden');
@@ -411,7 +576,7 @@ https://github.com/Harshjjw-l/Library_management_System
     // --- MODAL & CHATBOT TOGGLES ---
     function toggleLoginModal(show) {
         if (show) {
-            showAuthForm('login'); // Default to login view
+            showAuthForm('login');
             loginModal.classList.remove('hidden');
         } else {
             loginModal.classList.add('hidden');
@@ -494,7 +659,7 @@ https://github.com/Harshjjw-l/Library_management_System
         } else if (message.includes('not available') || message.includes('unavailable') || message.includes('issue')) {
             return "I'm sorry the book is not available. You can place a request with the librarian to be notified upon its return.";
         } else if (message.includes('recommend') || message.includes('suggest') || message.includes('book')) {
-            return "Based on popular demand, I recommend 'Clean Code' by Robert C. Martin for software engineering students.";
+            return "You can use our AI Syllabus Analyzer tab to get automated TF-IDF recommendations and syllabus coverage scores!";
         }
         return "I can help with questions about fines, library hours, and book recommendations. How can I assist you?";
     }
@@ -503,9 +668,9 @@ https://github.com/Harshjjw-l/Library_management_System
         const messageDiv = document.createElement('div');
         messageDiv.classList.add('mb-3');
         if (sender === 'user') {
-            messageDiv.innerHTML = `<div class="flex justify-end"><p class="bg-indigo-500 text-white rounded-lg py-2 px-4 max-w-xs">${message}</p></div>`;
+            messageDiv.innerHTML = `<div class="flex justify-end"><p class="bg-indigo-500 text-white rounded-lg py-2 px-4 max-w-xs text-sm">${message}</p></div>`;
         } else {
-            messageDiv.innerHTML = `<div class="flex justify-start"><p class="bg-gray-200 text-gray-800 rounded-lg py-2 px-4 max-w-xs">${message}</p></div>`;
+            messageDiv.innerHTML = `<div class="flex justify-start"><p class="bg-gray-200 text-gray-800 rounded-lg py-2 px-4 max-w-xs text-sm">${message}</p></div>`;
         }
         chatMessages.appendChild(messageDiv);
         chatMessages.scrollTop = chatMessages.scrollHeight;
@@ -517,102 +682,220 @@ https://github.com/Harshjjw-l/Library_management_System
             addChatMessage('user', userMessage);
             e.target.value = '';
             
-            // Get intelligent bot response
             const botResponse = getBotResponse(userMessage);
-
-            // Simulate bot thinking and respond
             setTimeout(() => {
                 addChatMessage('bot', botResponse);
-            }, 1000);
+            }, 800);
         }
     });
 
-    // --- SYLLABUS ANALYZER ---
+    // --- SYLLABUS ANALYZER INTEGRATION ---
     syllabusUpload.addEventListener('change', (e) => {
         if (e.target.files.length > 0) {
-            fileNameDisplay.textContent = e.target.files[0].name;
+            fileNameDisplay.textContent = `Selected: ${e.target.files[0].name}`;
         }
     });
 
-    function analyzeSyllabus() {
-        if (!syllabusUpload.files.length) {
-            alert('Please upload a syllabus file first.');
+    async function analyzeSyllabus() {
+        const customCourseId = document.getElementById('custom-course-id').value.trim();
+        const selectedCourseId = courseSelect.value;
+        const courseId = customCourseId || selectedCourseId;
+
+        const errorBanner = document.getElementById('ai-error-banner');
+        const errorMessage = document.getElementById('ai-error-message');
+        const spinner = document.getElementById('loading-spinner');
+        const resultsDiv = document.getElementById('analysis-results');
+
+        errorBanner.classList.add('hidden');
+
+        if (!courseId) {
+            errorMessage.textContent = 'Please select a course from the dropdown or enter a Course ID (e.g. CS101) to run the AI analysis.';
+            errorBanner.classList.remove('hidden');
             return;
         }
 
-        document.getElementById('analysis-results').classList.add('hidden');
-        document.getElementById('loading-spinner').classList.remove('hidden');
+        resultsDiv.classList.add('hidden');
+        spinner.classList.remove('hidden');
 
-        // Simulate AI analysis delay
-        setTimeout(() => {
-            document.getElementById('loading-spinner').classList.add('hidden');
-            renderAnalysisResults();
-            document.getElementById('analysis-results').classList.remove('hidden');
-        }, 3000);
+        try {
+            // Execute parallel calls to Java backend AI endpoints
+            const [recommendRes, coverageRes, supplementaryRes] = await Promise.all([
+                fetch(`${API_BASE_URL}/api/ai/recommend`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ courseId: courseId, topN: 5 })
+                }),
+                fetch(`${API_BASE_URL}/api/ai/coverage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ courseId: courseId })
+                }),
+                fetch(`${API_BASE_URL}/api/ai/supplementary`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ courseId: courseId, topN: 5 })
+                })
+            ]);
+
+            // Check for HTTP errors
+            if (!recommendRes.ok) {
+                const errData = await recommendRes.json().catch(() => ({}));
+                throw new Error(errData.error || `/api/ai/recommend returned status ${recommendRes.status}`);
+            }
+            if (!coverageRes.ok) {
+                const errData = await coverageRes.json().catch(() => ({}));
+                throw new Error(errData.error || `/api/ai/coverage returned status ${coverageRes.status}`);
+            }
+            if (!supplementaryRes.ok) {
+                const errData = await supplementaryRes.json().catch(() => ({}));
+                throw new Error(errData.error || `/api/ai/supplementary returned status ${supplementaryRes.status}`);
+            }
+
+            const recData = await recommendRes.json();
+            const covData = await coverageRes.json();
+            const supData = await supplementaryRes.json();
+
+            spinner.classList.add('hidden');
+            renderAnalysisResults(recData, covData, supData);
+            resultsDiv.classList.remove('hidden');
+
+        } catch (err) {
+            spinner.classList.add('hidden');
+            console.error('AI Analysis failed:', err);
+            errorMessage.textContent = err.message || 'Failed to connect to the Java AI backend. Ensure the Spring Boot service is running at http://localhost:8080 and Python AI service at http://localhost:8000.';
+            errorBanner.classList.remove('hidden');
+        }
     }
 
-    function renderAnalysisResults() {
-        const recommendations = [
-            {...books[3], score: 92},
-            {...books[6], score: 85},
-            {...books[1], score: 78},
-        ];
-
+    function renderAnalysisResults(recData, covData, supData) {
+        // 1. Top Recommendations (TF-IDF Similarity)
         const recList = document.getElementById('recommendation-list');
+        const scoreBadge = document.getElementById('score-note-badge');
         recList.innerHTML = '';
-        recommendations.forEach(rec => {
-            recList.innerHTML += `
-                <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg border">
-                    <div>
-                        <p class="font-semibold text-indigo-700">${rec.title}</p>
-                        <p class="text-sm text-gray-500">${rec.author}</p>
-                    </div>
-                    <div class="text-right">
-                        <p class="font-bold text-lg text-indigo-600">${rec.score}%</p>
-                        <p class="text-sm text-gray-500">Match</p>
-                    </div>
-                </div>
-            `;
-        });
         
-        // Render Pie Chart
-        const ctx = document.getElementById('similarity-chart').getContext('2d');
-        const topBook = recommendations[0];
-        document.getElementById('chart-summary').textContent = `'${topBook.title}' has the highest match with your syllabus at ${topBook.score}%.`;
+        scoreBadge.textContent = recData.score_note || 'TF-IDF Cosine Similarity';
 
+        if (recData.recommendations && recData.recommendations.length > 0) {
+            recData.recommendations.forEach(rec => {
+                const scorePercent = (rec.similarity_score * 100).toFixed(1);
+                const matchedTopicsHtml = (rec.matched_topics && rec.matched_topics.length > 0)
+                    ? rec.matched_topics.map(t => `<span class="bg-indigo-50 text-indigo-700 text-xs px-2 py-0.5 rounded font-medium">${t}</span>`).join(' ')
+                    : '<span class="text-xs text-gray-400">No matched topics</span>';
+
+                recList.innerHTML += `
+                    <div class="p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-indigo-300 transition">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <p class="font-bold text-gray-800 text-lg">${rec.title}</p>
+                                <p class="text-xs text-gray-500 mt-0.5">Book ID: ${rec.id}</p>
+                            </div>
+                            <div class="text-right flex-shrink-0 ml-4">
+                                <span class="inline-block font-bold text-lg text-indigo-600 bg-indigo-50 px-3 py-1 rounded-lg">${scorePercent}%</span>
+                                <p class="text-xs text-gray-500 mt-0.5">Similarity</p>
+                            </div>
+                        </div>
+                        <div class="mt-3 flex flex-wrap items-center gap-1.5">
+                            <span class="text-xs font-semibold text-gray-500 mr-1">Matched Topics:</span>
+                            ${matchedTopicsHtml}
+                        </div>
+                    </div>
+                `;
+            });
+        } else {
+            recList.innerHTML = '<p class="text-gray-500 text-center py-4">No book recommendations available for this course.</p>';
+        }
+
+        // 2. Syllabus Coverage Doughnut Chart & Summary
+        const covPercent = covData.coverage_percentage ? covData.coverage_percentage.toFixed(1) : '0.0';
+        document.getElementById('chart-summary').textContent = `${covPercent}% Coverage (${covData.covered_count}/${covData.total_count} Topics)`;
+        document.getElementById('coverage-explanation').textContent = covData.explanation || '';
+
+        const ctx = document.getElementById('similarity-chart').getContext('2d');
         if (similarityChart) {
             similarityChart.destroy();
         }
 
+        const matchValue = covData.coverage_percentage || 0;
         similarityChart = new Chart(ctx, {
             type: 'doughnut',
             data: {
-                labels: ['Syllabus Match', 'Other Content'],
+                labels: ['Covered Topics', 'Uncovered Topics'],
                 datasets: [{
-                    data: [topBook.score, 100 - topBook.score],
-                    backgroundColor: ['#4f46e5', '#e5e7eb'],
+                    data: [matchValue, Math.max(0, 100 - matchValue)],
+                    backgroundColor: ['#10b981', '#f59e0b'],
                     borderColor: ['#ffffff'],
-                    borderWidth: 2
+                    borderWidth: 3
                 }]
             },
             options: {
                 responsive: true,
-                cutout: '70%',
+                cutout: '72%',
                 plugins: {
-                    legend: {
-                        display: false
-                    },
-                    tooltip: {
-                        enabled: false
-                    }
+                    legend: { display: false },
+                    tooltip: { enabled: true }
                 }
             }
         });
-    }
 
+        // 3. Topic Lists (Covered vs Missing)
+        const coveredList = document.getElementById('covered-topics-list');
+        const missingList = document.getElementById('missing-topics-list');
+
+        coveredList.innerHTML = (covData.covered_topics && covData.covered_topics.length > 0)
+            ? covData.covered_topics.map(t => `<span class="bg-emerald-100 text-emerald-800 text-xs px-2.5 py-1 rounded-full font-semibold border border-emerald-200">${t}</span>`).join('')
+            : '<span class="text-sm text-gray-400 italic">None</span>';
+
+        missingList.innerHTML = (covData.missing_topics && covData.missing_topics.length > 0)
+            ? covData.missing_topics.map(t => `<span class="bg-amber-100 text-amber-800 text-xs px-2.5 py-1 rounded-full font-semibold border border-amber-200">${t}</span>`).join('')
+            : '<span class="text-sm text-gray-400 italic">None (100% Covered!)</span>';
+
+        // 4. Supplementary Recommendations
+        const supList = document.getElementById('supplementary-list');
+        const bumpBadge = document.getElementById('supplementary-coverage-bump');
+        const remainingContainer = document.getElementById('remaining-uncovered-container');
+        const remainingList = document.getElementById('remaining-uncovered-list');
+
+        const beforePct = supData.coverage_percentage_before ? supData.coverage_percentage_before.toFixed(1) : '0.0';
+        const afterPct = supData.coverage_percentage_after ? supData.coverage_percentage_after.toFixed(1) : '0.0';
+
+        bumpBadge.innerHTML = `Coverage Boost: <span class="text-emerald-700">${beforePct}%</span> ➔ <span class="font-bold text-emerald-800">${afterPct}%</span>`;
+
+        supList.innerHTML = '';
+        if (supData.recommendations && supData.recommendations.length > 0) {
+            supData.recommendations.forEach(sup => {
+                const newTopicsHtml = (sup.new_topics_covered && sup.new_topics_covered.length > 0)
+                    ? sup.new_topics_covered.map(t => `<span class="bg-emerald-50 text-emerald-700 text-xs px-2 py-0.5 rounded font-medium border border-emerald-200">+ ${t}</span>`).join(' ')
+                    : '<span class="text-xs text-gray-400">None</span>';
+
+                supList.innerHTML += `
+                    <div class="p-4 bg-emerald-50/50 rounded-lg border border-emerald-200">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <p class="font-bold text-gray-800 text-lg">${sup.title}</p>
+                                <p class="text-xs text-gray-600 mt-1">${sup.explanation || ''}</p>
+                            </div>
+                            <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-2.5 py-1 rounded-full flex-shrink-0 ml-4">
+                                +${sup.new_topics_count} New Topics
+                            </span>
+                        </div>
+                        <div class="mt-3 flex flex-wrap items-center gap-1.5">
+                            <span class="text-xs font-semibold text-gray-600 mr-1">New Topics Covered:</span>
+                            ${newTopicsHtml}
+                        </div>
+                    </div>
+                `;
+            });
+        } else {
+            supList.innerHTML = `<p class="text-sm text-gray-500 italic py-2">${supData.explanation || 'No additional supplementary books required.'}</p>`;
+        }
+
+        if (supData.remaining_uncovered_topics && supData.remaining_uncovered_topics.length > 0) {
+            remainingList.innerHTML = supData.remaining_uncovered_topics.map(t => `<span class="bg-red-100 text-red-700 text-xs px-2.5 py-1 rounded-full font-medium border border-red-200">${t}</span>`).join('');
+            remainingContainer.classList.remove('hidden');
+        } else {
+            remainingContainer.classList.add('hidden');
+        }
+    }
 </script>
 </body>
 </html>
-
-
-
