@@ -25,3 +25,6 @@ replay_pid*
 target/
 *.log
 .env
+ai_service/.venv/
+
+ai_service/.venv/

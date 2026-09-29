@@ -1,0 +1,192 @@
+[
+  {
+    "id": 1,
+    "title": "Artificial Intelligence: A Modern Approach",
+    "topics": [
+      "Artificial Intelligence",
+      "Search",
+      "BFS",
+      "DFS",
+      "A*",
+      "Minimax",
+      "Game Trees",
+      "Constraint Satisfaction",
+      "Knowledge Representation"
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Introduction to Algorithms",
+    "topics": [
+      "Algorithms",
+      "Sorting",
+      "BFS",
+      "DFS",
+      "Graphs",
+      "Dijkstra Algorithm",
+      "Dynamic Programming",
+      "Greedy Algorithms",
+      "Time Complexity"
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Data Structures Using C",
+    "topics": [
+      "Arrays",
+      "Linked Lists",
+      "Stacks",
+      "Queues",
+      "Trees",
+      "Graphs",
+      "Hashing",
+      "Sorting"
+    ]
+  },
+  {
+    "id": 4,
+    "title": "Database System Concepts",
+    "topics": [
+      "SQL",
+      "Relational Model",
+      "Normalization",
+      "Transactions",
+      "Indexing",
+      "ER Model"
+    ]
+  },
+  {
+    "id": 5,
+    "title": "Operating System Concepts",
+    "topics": [
+      "Process Scheduling",
+      "Deadlocks",
+      "Memory Management",
+      "Virtual Memory",
+      "File Systems",
+      "Synchronization"
+    ]
+  },
+  {
+    "id": 6,
+    "title": "Computer Networks",
+    "topics": [
+      "OSI Model",
+      "TCP/IP",
+      "Routing",
+      "Transport Layer",
+      "Congestion Control",
+      "Network Security"
+    ]
+  },
+  {
+    "id": 7,
+    "title": "Pattern Recognition and Machine Learning",
+    "topics": [
+      "Machine Learning",
+      "Supervised Learning",
+      "Linear Regression",
+      "Logistic Regression",
+      "KNN",
+      "Decision Trees",
+      "Neural Networks"
+    ]
+  },
+  {
+    "id": 8,
+    "title": "Hands-On Machine Learning",
+    "topics": [
+      "Machine Learning",
+      "Supervised Learning",
+      "Unsupervised Learning",
+      "Clustering",
+      "Decision Trees",
+      "Neural Networks",
+      "K-Nearest Neighbors"
+    ]
+  },
+  {
+    "id": 9,
+    "title": "Software Engineering",
+    "topics": [
+      "Software Development Life Cycle",
+      "Requirements Engineering",
+      "Agile",
+      "UML",
+      "Software Testing"
+    ]
+  },
+  {
+    "id": 10,
+    "title": "Fundamentals of Database Systems",
+    "topics": [
+      "SQL",
+      "Relational Model",
+      "Normalization",
+      "Transactions",
+      "Concurrency Control",
+      "Query Processing"
+    ]
+  },
+  {
+    "id": 11,
+    "title": "Artificial Intelligence: Foundations of Computational Agents",
+    "topics": [
+      "Artificial Intelligence",
+      "Search",
+      "A-star",
+      "Constraint Satisfaction",
+      "Knowledge Representation",
+      "Game Trees",
+      "Minimax"
+    ]
+  },
+  {
+    "id": 12,
+    "title": "Software Engineering: A Practitioner's Approach",
+    "topics": [
+      "Agile",
+      "Software Testing",
+      "Software Project Management",
+      "Requirements Engineering",
+      "UML",
+      "Design Patterns"
+    ]
+  },
+  {
+    "id": 13,
+    "title": "Modern Operating Systems",
+    "topics": [
+      "Process Scheduling",
+      "Deadlocks",
+      "Memory Management",
+      "Virtual Memory",
+      "File Systems",
+      "Threads"
+    ]
+  },
+  {
+    "id": 14,
+    "title": "Computer Networking: A Top-Down Approach",
+    "topics": [
+      "TCP/IP",
+      "HTTP",
+      "DNS",
+      "Routing",
+      "Transport Layer",
+      "Network Security"
+    ]
+  },
+  {
+    "id": 15,
+    "title": "Introduction to Machine Learning",
+    "topics": [
+      "Machine Learning",
+      "Supervised Learning",
+      "Linear Regression",
+      "Neural Networks",
+      "Model Evaluation",
+      "Cross Validation"
+    ]
+  }
+]
