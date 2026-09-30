@@ -6,11 +6,13 @@ import com.lms.library_management_system.model.Status;
 import com.lms.library_management_system.repository.BookRepository;
 import com.lms.library_management_system.repository.StudentRepository;
 import com.lms.library_management_system.repository.StatusRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 public class CirculationService {
@@ -24,58 +26,87 @@ public class CirculationService {
     @Autowired
     private StatusRepository statusRepository;
 
-    @Transactional // Ensures this entire method is one single database transaction
+    // =========================
+    // ISSUE BOOK
+    // =========================
+    @Transactional
     public Status issueBook(Long bookId, String studentPrn) {
-        // 1. Find the book and student, or throw an error if they don't exist.
-        Book book = bookRepository.findById(bookId)
-                .orElseThrow(() -> new RuntimeException("Book not found with id: " + bookId));
-        
-        Student student = studentRepository.findById(studentPrn)
-                .orElseThrow(() -> new RuntimeException("Student not found with PRN: " + studentPrn));
 
-        // 2. Check the business rule: Is the book available?
+        // 1. Find the book and student
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(() ->
+                        new RuntimeException("Book not found with id: " + bookId));
+
+        Student student = studentRepository.findById(studentPrn)
+                .orElseThrow(() ->
+                        new RuntimeException("Student not found with PRN: " + studentPrn));
+
+        // 2. Check availability
         if (!book.getAvailability()) {
-            throw new RuntimeException("Book is currently issued and not available.");
+            throw new RuntimeException(
+                    "Book is currently issued and not available.");
         }
 
-        // 3. Update the book's status and save it.
+        // 3. Mark book as unavailable
         book.setAvailability(false);
         bookRepository.save(book);
 
-        // 4. Create a new Status record to track the loan.
+        // 4. Create circulation record
         Status newStatus = new Status();
         newStatus.setBook(book);
         newStatus.setStudent(student);
         newStatus.setIssueDate(LocalDate.now());
-        // We can leave returnDate and fine as null/default for now.
-        
-        // 5. Save the new status record and return it.
+
+        // 5. Save circulation record
         return statusRepository.save(newStatus);
     }
-    
-    // We will add the returnBook method later.
-    // Add this method to your existing CirculationService class
 
-@Transactional
-public Status returnBook(Integer statusId) {
-    // 1. Find the specific loan record (Status) by its ID.
-    Status status = statusRepository.findById(statusId)
-            .orElseThrow(() -> new RuntimeException("Loan record not found with id: " + statusId));
+    // =========================
+    // RETURN BOOK
+    // =========================
+    @Transactional
+    public Status returnBook(Integer statusId) {
 
-    // 2. Check if the book has already been returned.
-    if (status.getReturnDate() != null) {
-        throw new RuntimeException("This book has already been returned.");
+        // 1. Find circulation record
+        Status status = statusRepository.findById(statusId)
+                .orElseThrow(() ->
+                        new RuntimeException(
+                                "Loan record not found with id: " + statusId));
+
+        // 2. Check if already returned
+        if (status.getReturnDate() != null) {
+            throw new RuntimeException(
+                    "This book has already been returned.");
+        }
+
+        // 3. Get associated book
+        Book book = status.getBook();
+
+        // 4. Update book availability
+        book.setAvailability(true);
+
+        // 5. Set return date
+        status.setReturnDate(LocalDate.now());
+
+        // 6. Save changes
+        bookRepository.save(book);
+
+        return statusRepository.save(status);
     }
 
-    // 3. Get the associated book from the status record.
-    Book book = status.getBook();
+    // =========================
+    // GET ALL CIRCULATION RECORDS
+    // OF A STUDENT
+    // =========================
+    public List<Status> getStudentCirculation(Student student) {
+        return statusRepository.findByStudent(student);
+    }
 
-    // 4. Update the book's availability and the status record's return date.
-    book.setAvailability(true);
-    status.setReturnDate(LocalDate.now());
-
-    // 5. Save the changes to the database.
-    bookRepository.save(book);
-    return statusRepository.save(status);
-}
+    // =========================
+    // GET CURRENTLY ISSUED BOOKS
+    // OF A STUDENT
+    // =========================
+    public List<Status> getIssuedBooks(Student student) {
+        return statusRepository.findByStudentAndReturnDateIsNull(student);
+    }
 }
