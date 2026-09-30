@@ -1,0 +1,60 @@
+{
+  "BFS": [
+    "BFS",
+    "Breadth First Search",
+    "Breadth-First Search"
+  ],
+  "DFS": [
+    "DFS",
+    "Depth First Search",
+    "Depth-First Search"
+  ],
+  "A*": [
+    "A*",
+    "A Star",
+    "A-Star"
+  ],
+  "Minimax": [
+    "Minimax",
+    "MiniMax",
+    "Min-Max"
+  ],
+  "Alpha-Beta Pruning": [
+    "Alpha-Beta Pruning",
+    "Alpha Beta Pruning",
+    "Alpha-Beta"
+  ],
+  "Knowledge Representation": [
+    "Knowledge Representation",
+    "KR"
+  ],
+  "Propositional Logic": [
+    "Propositional Logic",
+    "Propositional Calculus"
+  ],
+  "Predicate Logic": [
+    "Predicate Logic",
+    "First Order Logic",
+    "First-Order Logic",
+    "FOL"
+  ],
+  "Bayesian Networks": [
+    "Bayesian Networks",
+    "Bayes Networks",
+    "Bayesian Network"
+  ],
+  "Decision Trees": [
+    "Decision Trees",
+    "Decision Tree"
+  ],
+  "Neural Networks": [
+    "Neural Networks",
+    "Neural Network",
+    "ANN",
+    "Artificial Neural Networks"
+  ],
+  "NLP": [
+    "NLP",
+    "Natural Language Processing"
+  ]
+}

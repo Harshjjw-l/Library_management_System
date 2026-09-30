@@ -1,0 +1,19 @@
+{
+  "course": "Artificial Intelligence",
+  "version": "demo-v1",
+  "topics": [
+    "Search",
+    "BFS",
+    "DFS",
+    "A*",
+    "Minimax",
+    "Alpha-Beta Pruning",
+    "Knowledge Representation",
+    "Propositional Logic",
+    "Predicate Logic",
+    "Bayesian Networks",
+    "Decision Trees",
+    "Neural Networks",
+    "NLP"
+  ]
+}

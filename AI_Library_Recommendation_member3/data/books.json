@@ -1,0 +1,150 @@
+[
+  {
+    "id": 1,
+    "title": "AI Fundamentals",
+    "topics": [
+      "Search",
+      "BFS",
+      "DFS",
+      "A*",
+      "Knowledge Representation"
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Introduction to Intelligent Systems",
+    "topics": [
+      "Search",
+      "BFS",
+      "DFS",
+      "Minimax",
+      "Alpha-Beta Pruning"
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Game AI and Adversarial Search",
+    "topics": [
+      "Minimax",
+      "Alpha-Beta Pruning",
+      "Game Trees",
+      "Search"
+    ]
+  },
+  {
+    "id": 4,
+    "title": "Knowledge Representation and Reasoning",
+    "topics": [
+      "Knowledge Representation",
+      "Propositional Logic",
+      "Predicate Logic"
+    ]
+  },
+  {
+    "id": 5,
+    "title": "Probabilistic Artificial Intelligence",
+    "topics": [
+      "Bayesian Networks",
+      "Uncertainty",
+      "Probability"
+    ]
+  },
+  {
+    "id": 6,
+    "title": "Machine Learning Fundamentals",
+    "topics": [
+      "Decision Trees",
+      "KNN",
+      "Linear Regression",
+      "Classification"
+    ]
+  },
+  {
+    "id": 7,
+    "title": "Deep Learning Essentials",
+    "topics": [
+      "Neural Networks",
+      "Backpropagation",
+      "Classification"
+    ]
+  },
+  {
+    "id": 8,
+    "title": "Natural Language Processing",
+    "topics": [
+      "NLP",
+      "Text Preprocessing",
+      "Classification"
+    ]
+  },
+  {
+    "id": 9,
+    "title": "Graph Search Algorithms",
+    "topics": [
+      "BFS",
+      "DFS",
+      "A*",
+      "Graph Traversal"
+    ]
+  },
+  {
+    "id": 10,
+    "title": "Logic for Artificial Intelligence",
+    "topics": [
+      "Propositional Logic",
+      "Predicate Logic",
+      "Knowledge Representation"
+    ]
+  },
+  {
+    "id": 11,
+    "title": "Applied Bayesian Learning",
+    "topics": [
+      "Bayesian Networks",
+      "Probability",
+      "Classification"
+    ]
+  },
+  {
+    "id": 12,
+    "title": "Practical Machine Learning",
+    "topics": [
+      "Decision Trees",
+      "KNN",
+      "Linear Regression",
+      "Classification"
+    ]
+  },
+  {
+    "id": 13,
+    "title": "Neural Networks in Practice",
+    "topics": [
+      "Neural Networks",
+      "Backpropagation",
+      "Classification"
+    ]
+  },
+  {
+    "id": 14,
+    "title": "Modern NLP Applications",
+    "topics": [
+      "NLP",
+      "Text Preprocessing",
+      "Classification"
+    ]
+  },
+  {
+    "id": 15,
+    "title": "Comprehensive Artificial Intelligence",
+    "topics": [
+      "Search",
+      "A*",
+      "Minimax",
+      "Knowledge Representation",
+      "Bayesian Networks",
+      "Decision Trees",
+      "Neural Networks",
+      "NLP"
+    ]
+  }
+]
